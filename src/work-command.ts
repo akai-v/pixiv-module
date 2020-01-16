@@ -57,7 +57,7 @@ export class WorkCommand implements CommandInfo {
                 encoding: null
             });
 
-            e.Channel.sendRichTemplate(new AttachmentTemplate(`${illust.title}\nby ${illust.user.name}\n\nhttps://www.pixiv.net/artworks/${id}`, new TemplateAttachment(AttachmentType.IMAGE, 'illust.jpg', buffer)));
+            e.Channel.sendRichTemplate(new AttachmentTemplate(`${illust.title}\nby ${illust.user.name}\n\n${illust.tags.map((tag) => `#${tag.name}`).join(', ')}\n\nhttps://www.pixiv.net/artworks/${id}`, new TemplateAttachment(AttachmentType.IMAGE, 'illust.jpg', buffer)));
         } catch(ex) {
             e.Channel.sendText(`해당 일러스트를 찾을수 없거나 에러가 발생했습니다. ${ex}`);
         }
