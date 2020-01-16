@@ -48,7 +48,7 @@ export class WorkCommand implements CommandInfo {
             let detail = await this.api.illustDetail(id);
             let illust = detail.illust;
 
-            let url = illust.imageUrls.large!;
+            let url = illust.metaSinglePage.originalImageUrl!;
 
             let buffer = await requestPromise(url, {
                 headers: {
@@ -57,7 +57,7 @@ export class WorkCommand implements CommandInfo {
                 encoding: null
             });
 
-            e.Channel.sendRichTemplate(new AttachmentTemplate(`${illust.title}\nby ${illust.user.name}\n\n${url}`, new TemplateAttachment(AttachmentType.IMAGE, 'illust.jpg', buffer)));
+            e.Channel.sendRichTemplate(new AttachmentTemplate(`${illust.title}\nby ${illust.user.name}\n\nhttps://www.pixiv.net/artworks/${id}`, new TemplateAttachment(AttachmentType.IMAGE, 'illust.jpg', buffer)));
         } catch(ex) {
             e.Channel.sendText(`해당 일러스트를 찾을수 없거나 에러가 발생했습니다. ${ex}`);
         }
