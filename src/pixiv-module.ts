@@ -1,6 +1,5 @@
 import { BotModule } from "@akaiv/core";
-import PixivAppApi from "pixiv-app-api";
-import { PixivClient } from "pixiv-app-api/dist/PixivTypes";
+import { WorkCommand } from "./work-command";
 
 /*
  * Created on Thu Jan 16 2020
@@ -8,12 +7,11 @@ import { PixivClient } from "pixiv-app-api/dist/PixivTypes";
  * Copyright (c) storycraft. Licensed under the MIT Licence.
  */
 
+const PixivApp = require("pixiv-app-api");
+
 export class PixivModule extends BotModule {
 
-    private api: PixivAppApi;
-    private info: PixivClient | null;
-
-    private loaded: boolean;
+    private api: any;
 
     constructor({ username, password }: {
         username: string,
@@ -21,11 +19,9 @@ export class PixivModule extends BotModule {
     }) {
         super();
 
-        this.api = new PixivAppApi(username, password);
-        this.info = null;
-        this.loaded = false;
+        this.api = new PixivApp(username, password);
 
-        this.login();
+        this.CommandManager.addCommand(new WorkCommand(this.api));
     }
 
     get Name() {
@@ -44,16 +40,8 @@ export class PixivModule extends BotModule {
         return this.api;
     }
 
-    get Loaded() {
-        return this.loaded;
-    }
-
-    protected async login() {
+    protected async loadModule(): Promise<void> {
         let client = await this.api.login();
-
-        this.info = client;
-
-        this.loaded = true;
     }
 
 }
