@@ -1,1 +1,1 @@
-export { ExampleModule as default } from "./example-module";
+export { PixivModule as default } from "./pixiv-module";
