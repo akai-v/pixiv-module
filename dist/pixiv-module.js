@@ -8,6 +8,8 @@ class PixivModule extends core_1.BotModule {
         super();
         this.api = new PixivApp(username, password);
         this.CommandManager.addCommand(new work_command_1.WorkCommand(this.api));
+        this.CommandManager.addCommand(new work_command_1.RecommendPicCommand(this.api));
+        this.CommandManager.addCommand(new work_command_1.RecommendNovelCommand(this.api));
     }
     get Name() {
         return 'Pixiv';
