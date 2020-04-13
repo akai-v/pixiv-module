@@ -1,5 +1,5 @@
 import { BotModule } from "@akaiv/core";
-import { WorkCommand, RecommendNovelCommand, RecommendPicCommand } from "./work-command";
+import { WorkCommand } from "./work-command";
 
 /*
  * Created on Thu Jan 16 2020
@@ -22,8 +22,6 @@ export class PixivModule extends BotModule {
         this.api = new PixivApp(username, password);
 
         this.CommandManager.addCommand(new WorkCommand(this.api));
-        this.CommandManager.addCommand(new RecommendPicCommand(this.api));
-        this.CommandManager.addCommand(new RecommendNovelCommand(this.api));
     }
 
     get Name() {
