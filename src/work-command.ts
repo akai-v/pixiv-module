@@ -99,6 +99,8 @@ export class RecommendPicCommand implements CommandInfo {
             let detail = await this.api.illustRecommendedNologin();
             let illust = detail.illusts[Math.min(Math.floor(detail.illusts.length * Math.random()), detail.illusts.length - 1)];
 
+            console.log(JSON.stringify(illust));
+
             let url = illust.imageUrls.medium;
 
             let buffer = await requestPromise(url, {
