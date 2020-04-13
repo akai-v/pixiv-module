@@ -22,7 +22,6 @@ class PixivModule extends core_1.BotModule {
         return this.api;
     }
     async loadModule() {
-        let client = await this.api.login();
     }
 }
 exports.PixivModule = PixivModule;

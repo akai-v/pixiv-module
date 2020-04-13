@@ -45,10 +45,14 @@ export class WorkCommand implements CommandInfo {
         }
 
         try {
+            if (!this.api.auth || this.api.auth.expiresIn < Date.now()) {
+                await this.api.login();
+            }
+
             let detail = await this.api.illustDetail(id);
             let illust = detail.illust;
 
-            let url = illust.metaSinglePage.originalImageUrl!;
+            let url = illust.imageUrls.medium;
 
             let buffer = await requestPromise(url, {
                 headers: {

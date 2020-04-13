@@ -41,7 +41,7 @@ export class PixivModule extends BotModule {
     }
 
     protected async loadModule(): Promise<void> {
-        let client = await this.api.login();
+        
     }
 
 }

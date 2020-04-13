@@ -29,16 +29,19 @@ class WorkCommand {
             return;
         }
         try {
+            if (!this.api.auth || this.api.auth.expiresIn < Date.now()) {
+                await this.api.login();
+            }
             let detail = await this.api.illustDetail(id);
             let illust = detail.illust;
-            let url = illust.metaSinglePage.originalImageUrl;
+            let url = illust.imageUrls.medium;
             let buffer = await requestPromise(url, {
                 headers: {
                     Referer: 'http://www.pixiv.net/'
                 },
                 encoding: null
             });
-            e.Channel.sendRichTemplate(new core_1.AttachmentTemplate(`${illust.title}\nby ${illust.user.name}\n\n${illust.tags.map((tag) => `#${tag.name} (${tag.translatedName})`).join(', ')}\n\nhttps://www.pixiv.net/artworks/${id}`, new core_1.TemplateAttachment(core_1.AttachmentType.IMAGE, 'illust.jpg', buffer)));
+            e.Channel.sendRichTemplate(new core_1.AttachmentTemplate(`${illust.title}\nby ${illust.user.name}\n\n${illust.tags.map((tag) => `#${tag.name}`).join(', ')}\n\nhttps://www.pixiv.net/artworks/${id}`, new core_1.TemplateAttachment(core_1.AttachmentType.IMAGE, 'illust.jpg', buffer)));
         }
         catch (ex) {
             e.Channel.sendText(`해당 일러스트를 찾을수 없거나 에러가 발생했습니다. ${ex}`);
