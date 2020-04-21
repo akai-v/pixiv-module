@@ -2,6 +2,7 @@ import { CommandInfo, BotCommandEvent, Logger, AttachmentTemplate, MessageAttach
 import PixivAppApi from "pixiv-app-api";
 import requestPromise = require("request-promise");
 import { writeFileSync } from "fs";
+import { PixivModule } from "./pixiv-module";
 
 /*
  * Created on Thu Jan 16 2020
@@ -11,10 +12,10 @@ import { writeFileSync } from "fs";
 
 export class WorkCommand implements CommandInfo {
 
-    private api: PixivAppApi;
+    private app: PixivModule;
 
-    constructor(api: PixivAppApi) {
-        this.api = api;
+    constructor(app: PixivModule) {
+        this.app = app;
     }
 
     get CommandList() {
@@ -45,11 +46,9 @@ export class WorkCommand implements CommandInfo {
         }
 
         try {
-            if (!this.api.auth || this.api.auth.expiresIn < Date.now()) {
-                await this.api.login();
-            }
+            let api = this.app.getAccessApi();
 
-            let detail = await this.api.illustDetail(id);
+            let detail = await api.illustDetail(id);
             let illust = detail.illust;
 
             let url = illust.imageUrls.medium;

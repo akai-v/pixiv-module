@@ -1,5 +1,6 @@
 import { BotModule } from "@akaiv/core";
 import { WorkCommand } from "./work-command";
+import PixivApp from "pixiv-app-api";
 
 /*
  * Created on Thu Jan 16 2020
@@ -11,7 +12,9 @@ const PixivApp = require("pixiv-app-api");
 
 export class PixivModule extends BotModule {
 
-    private api: any;
+    private api: PixivApp;
+
+    private lastLogin: number;
 
     constructor({ username, password }: {
         username: string,
@@ -19,9 +22,11 @@ export class PixivModule extends BotModule {
     }) {
         super();
 
+        this.lastLogin = 0;
+
         this.api = new PixivApp(username, password);
 
-        this.CommandManager.addCommand(new WorkCommand(this.api));
+        this.CommandManager.addCommand(new WorkCommand(this));
     }
 
     get Name() {
@@ -37,6 +42,12 @@ export class PixivModule extends BotModule {
     }
 
     get Api() {
+        return this.api;
+    }
+
+    getAccessApi() { 
+        if (!this.api.auth || this.lastLogin + this.api.auth.expiresIn < Date.now()) this.api.login();
+
         return this.api;
     }
 

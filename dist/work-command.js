@@ -3,8 +3,8 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const core_1 = require("@akaiv/core");
 const requestPromise = require("request-promise");
 class WorkCommand {
-    constructor(api) {
-        this.api = api;
+    constructor(app) {
+        this.app = app;
     }
     get CommandList() {
         return ['id'];
@@ -29,10 +29,8 @@ class WorkCommand {
             return;
         }
         try {
-            if (!this.api.auth || this.api.auth.expiresIn < Date.now()) {
-                await this.api.login();
-            }
-            let detail = await this.api.illustDetail(id);
+            let api = this.app.getAccessApi();
+            let detail = await api.illustDetail(id);
             let illust = detail.illust;
             let url = illust.imageUrls.medium;
             let buffer = await requestPromise(url, {

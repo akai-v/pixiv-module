@@ -1,8 +1,8 @@
 import { CommandInfo, BotCommandEvent, Logger } from "@akaiv/core";
-import PixivAppApi from "pixiv-app-api";
+import { PixivModule } from "./pixiv-module";
 export declare class WorkCommand implements CommandInfo {
-    private api;
-    constructor(api: PixivAppApi);
+    private app;
+    constructor(app: PixivModule);
     readonly CommandList: string[];
     readonly Description: string;
     readonly Usage: string;

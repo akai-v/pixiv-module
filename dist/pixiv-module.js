@@ -6,8 +6,9 @@ const PixivApp = require("pixiv-app-api");
 class PixivModule extends core_1.BotModule {
     constructor({ username, password }) {
         super();
+        this.lastLogin = 0;
         this.api = new PixivApp(username, password);
-        this.CommandManager.addCommand(new work_command_1.WorkCommand(this.api));
+        this.CommandManager.addCommand(new work_command_1.WorkCommand(this));
     }
     get Name() {
         return 'Pixiv';
@@ -19,6 +20,11 @@ class PixivModule extends core_1.BotModule {
         return 'pix';
     }
     get Api() {
+        return this.api;
+    }
+    getAccessApi() {
+        if (!this.api.auth || this.lastLogin + this.api.auth.expiresIn < Date.now())
+            this.api.login();
         return this.api;
     }
     async loadModule() {
