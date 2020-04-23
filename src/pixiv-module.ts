@@ -8,6 +8,7 @@ import PixivApp from "pixiv-app-api";
  * Copyright (c) storycraft. Licensed under the MIT Licence.
  */
 
+
 export class PixivModule extends BotModule {
 
     private api: PixivApp;
