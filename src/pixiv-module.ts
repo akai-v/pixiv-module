@@ -1,6 +1,6 @@
 import { BotModule } from "@akaiv/core";
 import { WorkCommand } from "./work-command";
-import PixivApp from "pixiv-app-api";
+import PixivAppType from "pixiv-app-api";
 
 /*
  * Created on Thu Jan 16 2020
@@ -8,10 +8,11 @@ import PixivApp from "pixiv-app-api";
  * Copyright (c) storycraft. Licensed under the MIT Licence.
  */
 
+const PixivApp = require('pixiv-app-api');
 
 export class PixivModule extends BotModule {
 
-    private api: PixivApp;
+    private api: PixivAppType;
 
     private lastLogin: number;
 

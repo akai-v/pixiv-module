@@ -2,12 +2,12 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 const core_1 = require("@akaiv/core");
 const work_command_1 = require("./work-command");
-const pixiv_app_api_1 = require("pixiv-app-api");
+const PixivApp = require('pixiv-app-api');
 class PixivModule extends core_1.BotModule {
     constructor({ username, password }) {
         super();
         this.lastLogin = 0;
-        this.api = new pixiv_app_api_1.default(username, password);
+        this.api = new PixivApp(username, password);
         this.CommandManager.addCommand(new work_command_1.WorkCommand(this));
     }
     get Name() {
