@@ -1,6 +1,5 @@
 import { BotModule } from "@akaiv/core";
 import PixivApp from "pixiv-app-api";
-declare const PixivApp: any;
 export declare class PixivModule extends BotModule {
     private api;
     private lastLogin;
@@ -12,7 +11,6 @@ export declare class PixivModule extends BotModule {
     readonly Description: string;
     readonly Namespace: string;
     readonly Api: PixivApp<true>;
-    getAccessApi(): PixivApp<true>;
+    getAccessApi(): Promise<PixivApp<true>>;
     protected loadModule(): Promise<void>;
 }
-export {};

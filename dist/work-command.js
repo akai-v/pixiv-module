@@ -29,7 +29,7 @@ class WorkCommand {
             return;
         }
         try {
-            let api = this.app.getAccessApi();
+            let api = await this.app.getAccessApi();
             let detail = await api.illustDetail(id);
             let illust = detail.illust;
             let url = illust.imageUrls.medium;

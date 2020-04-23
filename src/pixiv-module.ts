@@ -8,8 +8,6 @@ import PixivApp from "pixiv-app-api";
  * Copyright (c) storycraft. Licensed under the MIT Licence.
  */
 
-const PixivApp = require("pixiv-app-api");
-
 export class PixivModule extends BotModule {
 
     private api: PixivApp;
@@ -45,8 +43,8 @@ export class PixivModule extends BotModule {
         return this.api;
     }
 
-    getAccessApi() { 
-        if (!this.api.auth || this.lastLogin + this.api.auth.expiresIn < Date.now()) this.api.login();
+    async getAccessApi() { 
+        if (!this.api.auth || this.lastLogin + this.api.auth.expiresIn < Date.now()) await this.api.login();
 
         return this.api;
     }

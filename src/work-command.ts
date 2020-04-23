@@ -46,7 +46,7 @@ export class WorkCommand implements CommandInfo {
         }
 
         try {
-            let api = this.app.getAccessApi();
+            let api = await this.app.getAccessApi();
 
             let detail = await api.illustDetail(id);
             let illust = detail.illust;
